@@ -1,2 +1,7 @@
 # Ignore sample test images
 /testing/*.png
+
+# Runtime/generated artifacts
+deploy/*.log
+deploy/*.tmp
+testing/output/
