@@ -34,3 +34,9 @@ This repository uses a fixed OCR regression workflow for Sudoku screenshots.
 - Do not add per-cell hardcoded fixes (e.g., specific R/C overrides).
 - Prefer generalized rules (shape, holes, confidence, contour metrics).
 - Keep post-correction stages explicit and logged.
+
+## Local Tooling Notes (Windows)
+- Git executable path: `C:\Program Files\Git\cmd\git.exe`
+- If `git` is not on PATH, run commands as:
+  - `$git='C:\Program Files\Git\cmd\git.exe'`
+  - `& $git status`
