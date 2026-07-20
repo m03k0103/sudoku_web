@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudoku Solver</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Sudoku Solver</h1>
+    <p class="hint">画像を選択すると自動で盤面を読み込み、解法を計算して回答を表示します。<br />
+    誤認識があった場合はクリックして手動で修正してください。</p>
+
+    <details class="readme" aria-label="project information">
+      <summary>About</summary>
+      <p>Browser-only Sudoku OCR + solver.</p>
+      <ul>
+        <li>No server-side Python required.</li>
+        <li>Image upload auto-parses Sudoku board in browser.</li>
+        <li>Solve steps with previous/next navigation.</li>
+        <li>Reset returns to the uploaded initial board.</li>
+        <li>Answer button shows full solved board.</li>
+      </ul>
+      <h3>Tech</h3>
+      <ul>
+        <li>OpenCV.js for perspective transform and cell extraction</li>
+        <li>Tesseract.js for digit OCR</li>
+        <li>Plain JavaScript backtracking solver</li>
+      </ul>
+    </details>
+
+    <section class="controls">
+      <input id="imageInput" type="file" accept="image/*" />
+      <button id="resetBtn" class="secondary">最初に戻る</button>
+      <button id="prevBtn" class="secondary">戻る</button>
+      <button id="nextBtn" class="secondary">進む</button>
+      <button id="answerBtn">回答を表示</button>
+    </section>
+
+    <section class="layout">
+      <div id="board" class="board" aria-label="sudoku-board"></div>
+      <aside class="panel">
+        <h2>状態</h2>
+        <div id="status" class="status">ライブラリを初期化しています...</div>
+        <h2>ログ</h2>
+        <div id="log" class="log">まだ解いていません。</div>
+      </aside>
+    </section>
+
+    <canvas id="workCanvas" class="hidden"></canvas>
+  </main>
+
+  <script>
+    window.__opencvReadyPromise = new Promise((resolve) => {
+      window.__opencvReadyResolve = resolve;
+    });
+    window.Module = {
+      onRuntimeInitialized() {
+        window.__opencvReady = true;
+        if (typeof window.__opencvReadyResolve === "function") {
+          window.__opencvReadyResolve();
+        }
+      },
+    };
+  </script>
+  <script src="./tesseract.min.js"></script>
+  <script src="./opencv.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
